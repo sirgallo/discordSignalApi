@@ -1,7 +1,8 @@
-# Test Project
+# Discord Signals Api
+
+## To Run
 
 ```bash
-  npm install
-  npm run build
-  node ./dist/app.js testJson.json
+  docker-compose up --build --scale discordsignalsapi=N
 ```
+N is the number of workers to be deployed
