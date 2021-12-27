@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     ts: {
-      testProject: {
+      discordSignalApi: {
         tsconfig: {
           tsconfig: './tsconfig.json',
           passThrough: true,

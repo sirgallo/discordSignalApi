@@ -1,0 +1,27 @@
+version: "3"
+services:
+  discordsignalsapi:
+    image: discordsignalsapi_img
+    build:
+      context: ./api
+    ports:
+      - '8008'
+    environment:
+      - NODE_ENV=docker
+      - NODE_OPTIONS="--max-old-space-size=4096"
+    volumes:
+      - discordsignalapidata:/usr/src/app
+    networks:
+      - discordsignalapilayer
+    restart: always
+    healthcheck:
+        test: curl --fail http://localhost:8008/poll || kill 1
+        interval: 30s
+        timeout: 10s
+        retries: 3
+        start_period: 20s
+networks:
+  discordsignalapilayer:
+    driver: bridge
+volumes:
+    discordsignalapidata:
