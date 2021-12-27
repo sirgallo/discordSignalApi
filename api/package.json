@@ -1,7 +1,6 @@
 {
   "name": "testproject",
   "version": "1.0.0",
-  "description": "a test project",
   "scripts": {
     "build": "grunt --gruntfile gruntfile.js"
   },

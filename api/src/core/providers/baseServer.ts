@@ -1,9 +1,11 @@
 import { config } from 'dotenv'
-import cluster, { Worker } from 'cluster'
+//import cluster, { Cluster, Worker } from 'cluster'
 import * as os from 'os'
 import * as createError from 'http-errors'
 import * as express from 'express'
 //import * as path from 'path'
+const cluster = require('cluster')
+import { Worker } from 'cluster'
 const path = require('path');
 import * as cookieParser from 'cookie-parser'
 import * as logger from 'morgan'
@@ -48,10 +50,8 @@ export class BaseServer {
     this.app.use(express.static(path.join(__dirname, 'public')))
     this.app.use(compression())
 
-    console.log('hello, routes:', this.routes)
     for (const route of this.routes) {
-      console.log('hello, router: ', route.router)
-      this.app.use(route.path, route.router)
+      this.app.use(route.rootpath, route.router)
     }
 
     // catch 404 and forward to error handler
@@ -70,7 +70,6 @@ export class BaseServer {
 
     if(isClusterRequired && cluster.isPrimary) {
       this.setUpWorkers()
-      console.log(this.workers)
     } else {
       this.setUpServer()
     }
@@ -85,8 +84,8 @@ export class BaseServer {
   setUpWorkers () {
     console.log(`Welcome to ${this.name}, version ${this.version}`)
     console.log('')
-    //console.log(`Server @${this.ip} setting up ${this.numOfCpus} CPUs as workers.`)
-    //console.log('')
+    console.log(`Server @${this.ip} setting up ${this.numOfCpus} CPUs as workers.`)
+    console.log('')
 
     for(let cpu = 0; cpu < this.numOfCpus; cpu++) {
       this.workers.push(cluster.fork())

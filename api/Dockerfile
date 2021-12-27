@@ -1,9 +1,7 @@
 FROM node:lts-alpine
 
 WORKDIR /usr/src/discordsignalsapi
-
 COPY . ./
-COPY package*.json ./
 
 RUN apk --no-cache add curl
 RUN npm install
