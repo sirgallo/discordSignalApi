@@ -1,12 +1,11 @@
+const cluster = require('cluster')
+const path = require('path')
+
 import { config } from 'dotenv'
-//import cluster, { Cluster, Worker } from 'cluster'
 import * as os from 'os'
 import * as createError from 'http-errors'
 import * as express from 'express'
-//import * as path from 'path'
-const cluster = require('cluster')
 import { Worker } from 'cluster'
-const path = require('path');
 import * as cookieParser from 'cookie-parser'
 import * as logger from 'morgan'
 import * as compression from 'compression'
@@ -95,7 +94,7 @@ export class BaseServer {
       })
     }
 
-    cluster.on('online', worker => {
+    cluster.on('online', (worker) => {
       console.log(`Worker ${worker.process.pid} is online.`)
     })
 
